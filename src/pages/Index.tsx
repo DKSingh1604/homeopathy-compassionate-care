@@ -17,7 +17,7 @@ const Index = () => {
     };
     getSession();
 
-    const { subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (!session) {
         navigate("/auth");
@@ -59,4 +59,3 @@ const Index = () => {
 };
 
 export default Index;
-
