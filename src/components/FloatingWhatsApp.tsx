@@ -17,7 +17,7 @@ const FloatingWhatsApp = () => {
       <img
         src="/public/whatsapp.png"
         alt="WhatsApp Icon"
-        className="w-8 h-8"
+        className="w-6 h-6"
       />
     </a>
   );
