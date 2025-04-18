@@ -17,14 +17,20 @@ const Index = () => {
     };
     getSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    // Store subscription object
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (!session) {
         navigate("/auth");
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      // Safely unsubscribe if subscription exists
+      if (data && typeof data.subscription?.unsubscribe === "function") {
+        data.subscription.unsubscribe();
+      }
+    };
   }, [navigate]);
 
   return (

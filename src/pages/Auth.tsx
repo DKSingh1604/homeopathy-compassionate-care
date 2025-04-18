@@ -29,12 +29,17 @@ const Auth = () => {
     };
     getSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         navigate("/");
       }
     });
-    return () => subscription.unsubscribe();
+
+    return () => {
+      if (data && typeof data.subscription?.unsubscribe === "function") {
+        data.subscription.unsubscribe();
+      }
+    };
   }, [navigate]);
 
   const handleEmailPasswordAuth = async () => {
