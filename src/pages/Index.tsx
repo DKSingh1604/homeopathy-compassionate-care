@@ -59,6 +59,39 @@ const Index = () => {
             </div>
           )}
         </section>
+        {session && (
+          <nav className="mt-10 flex justify-center space-x-6 text-lg font-medium text-primary-foreground">
+            <Link to="/contact" className="hover:underline">
+              Contact
+            </Link>
+            <Link to="/admin" className="hover:underline">
+              Admin
+            </Link>
+            <Link to="/messages" className="hover:underline">
+              Messages
+            </Link>
+            <Link to="/appointments" className="hover:underline">
+              Appointments
+            </Link>
+          </nav>
+        )}
+        {/* Testimonials Section */}
+        <section className="mt-14 bg-white p-6 rounded-lg shadow-md border border-gray-200 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Patient Testimonials</h2>
+          <article className="mb-4">
+            <blockquote className="italic text-gray-700">
+              &quot;Dr. Harpal Singh genuinely cares for his patients. My recovery was smooth and complete.&quot;
+            </blockquote>
+            <p className="text-right font-semibold mt-2">- Patient A</p>
+          </article>
+          <article className="mb-4">
+            <blockquote className="italic text-gray-700">
+              &quot;A compassionate and knowledgeable homeopath. Highly recommended!&quot;
+            </blockquote>
+            <p className="text-right font-semibold mt-2">- Patient B</p>
+          </article>
+          <p className="text-center text-gray-600 mt-2">More reviews coming soon...</p>
+        </section>
       </div>
     </div>
   );
