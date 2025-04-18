@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { whatsapp } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
 const FloatingWhatsApp = () => {
   return (
@@ -11,9 +11,10 @@ const FloatingWhatsApp = () => {
       aria-label="WhatsApp quick chat"
       className="fixed bottom-6 right-6 z-50 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg transition-colors flex items-center justify-center"
     >
-      <whatsapp className="w-6 h-6" />
+      <MessageCircle className="w-6 h-6" />
     </a>
   );
 };
 
 export default FloatingWhatsApp;
+

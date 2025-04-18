@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { phone, mail, whatsapp } from "lucide-react";
+import { Phone, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Contact = () => {
@@ -20,7 +20,7 @@ const Contact = () => {
             className="flex items-center justify-center gap-3"
           >
             <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat">
-              <whatsapp className="w-5 h-5 text-green-600" />
+              <MessageCircle className="w-5 h-5 text-green-600" />
               WhatsApp Chat
             </a>
           </Button>
@@ -31,7 +31,7 @@ const Contact = () => {
             className="flex items-center justify-center gap-3"
           >
             <a href="mailto:drharpal@example.com" aria-label="Send Email">
-              <mail className="w-5 h-5 text-blue-600" />
+              <Mail className="w-5 h-5 text-blue-600" />
               Email
             </a>
           </Button>
@@ -42,7 +42,7 @@ const Contact = () => {
             className="flex items-center justify-center gap-3"
           >
             <a href="tel:+1234567890" aria-label="Call Phone">
-              <phone className="w-5 h-5 text-gray-700" />
+              <Phone className="w-5 h-5 text-gray-700" />
               Phone Call
             </a>
           </Button>
@@ -53,3 +53,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
