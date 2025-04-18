@@ -19,7 +19,12 @@ const Contact = () => {
             variant="outline"
             className="flex items-center justify-center gap-3"
           >
-            <a href="https://wa.me/919412340490" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat">
+            <a
+              href="https://wa.me/919412340490"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp chat"
+            >
               <MessageCircle className="w-5 h-5 text-green-600" />
               WhatsApp Chat
             </a>
@@ -30,7 +35,10 @@ const Contact = () => {
             variant="outline"
             className="flex items-center justify-center gap-3"
           >
-            <a href="mailto:drharpal@example.com" aria-label="Send Email">
+            <a
+              href="mailto:drharpal@example.com"
+              aria-label="Send Email"
+            >
               <Mail className="w-5 h-5 text-blue-600" />
               Email
             </a>
@@ -53,4 +61,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
