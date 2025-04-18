@@ -19,7 +19,7 @@ const Contact = () => {
             variant="outline"
             className="flex items-center justify-center gap-3"
           >
-            <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat">
+            <a href="https://wa.me/919412340490" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat">
               <MessageCircle className="w-5 h-5 text-green-600" />
               WhatsApp Chat
             </a>
@@ -41,7 +41,7 @@ const Contact = () => {
             variant="outline"
             className="flex items-center justify-center gap-3"
           >
-            <a href="tel:+1234567890" aria-label="Call Phone">
+            <a href="tel:+919412340490" aria-label="Call Phone">
               <Phone className="w-5 h-5 text-gray-700" />
               Phone Call
             </a>
