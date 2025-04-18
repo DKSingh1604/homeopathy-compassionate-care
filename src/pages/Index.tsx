@@ -1,11 +1,11 @@
-
 import * as React from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const Index = () => {
   const [session, setSession] = React.useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   React.useEffect(() => {
     const getSession = async () => {
@@ -60,20 +60,50 @@ const Index = () => {
           )}
         </section>
         {session && (
-          <nav className="mt-10 flex justify-center space-x-6 text-lg font-medium text-primary-foreground">
-            <Link to="/contact" className="hover:underline">
-              Contact
-            </Link>
-            <Link to="/admin" className="hover:underline">
-              Admin
-            </Link>
-            <Link to="/messages" className="hover:underline">
-              Messages
-            </Link>
-            <Link to="/appointments" className="hover:underline">
-              Appointments
-            </Link>
-          </nav>
+          <nav className="mt-10">
+          <ul className="flex justify-center space-x-6 text-lg font-medium text-gray-800 border-b border-gray-300 pb-2">
+            <li>
+              <Link
+                to="/contact"
+                className={`hover:underline ${
+                  location.pathname === "/contact" ? "text-gray-900 font-bold" : "text-gray-700"
+                }`}
+              >
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin"
+                className={`hover:underline ${
+                  location.pathname === "/admin" ? "text-gray-900 font-bold" : "text-gray-700"
+                }`}
+              >
+                Admin
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/messages"
+                className={`hover:underline ${
+                  location.pathname === "/messages" ? "text-gray-900 font-bold" : "text-gray-700"
+                }`}
+              >
+                Messages
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/appointments"
+                className={`hover:underline ${
+                  location.pathname === "/appointments" ? "text-gray-900 font-bold" : "text-gray-700"
+                }`}
+              >
+                Appointments
+              </Link>
+            </li>
+          </ul>
+        </nav>
         )}
         {/* Testimonials Section */}
         <section className="mt-14 bg-white p-6 rounded-lg shadow-md border border-gray-200 max-w-2xl mx-auto">
