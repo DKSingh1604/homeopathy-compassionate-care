@@ -2,6 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const daysOfWeek = [
   "Monday",
@@ -53,41 +54,42 @@ const Admin = () => {
     });
   };
 
-  // TODO: Add saving to backend (Supabase) if applicable
-
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-start py-12 px-6 sm:px-12 lg:px-20">
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-start py-12 px-6 sm:px-12 lg:px-20">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
       <div className="max-w-4xl w-full">
-        <h1 className="text-3xl font-semibold mb-6 text-gray-900 text-center">Admin Panel - Weekly Availability</h1>
+        <h1 className="text-3xl font-semibold mb-6 text-center">Admin Panel - Weekly Availability</h1>
 
         {daysOfWeek.map((day) => (
-          <section key={day} className="mb-6 border border-gray-300 rounded p-4 bg-[#D3E4FD]">
+          <section key={day} className="mb-6 border border-border rounded p-4 bg-card/30">
             <h2 className="text-xl font-medium mb-4">{day}</h2>
 
             {availability[day].map((slot, idx) => (
               <div key={idx} className="flex items-center space-x-4 mb-3">
                 <label className="flex flex-col">
-                  <span className="text-sm text-gray-700">Start Time</span>
+                  <span className="text-sm text-muted-foreground">Start Time</span>
                   <input
                     type="time"
                     value={slot.start}
                     onChange={(e) => updateTimeSlot(day, idx, "start", e.target.value)}
-                    className="mt-1 rounded border border-input px-2 py-1"
+                    className="mt-1 rounded border border-input bg-background px-2 py-1"
                   />
                 </label>
                 <label className="flex flex-col">
-                  <span className="text-sm text-gray-700">End Time</span>
+                  <span className="text-sm text-muted-foreground">End Time</span>
                   <input
                     type="time"
                     value={slot.end}
                     onChange={(e) => updateTimeSlot(day, idx, "end", e.target.value)}
-                    className="mt-1 rounded border border-input px-2 py-1"
+                    className="mt-1 rounded border border-input bg-background px-2 py-1"
                   />
                 </label>
                 <button
                   type="button"
                   onClick={() => removeTimeSlot(day, idx)}
-                  className="text-red-600 hover:text-red-800 font-semibold"
+                  className="text-destructive hover:text-destructive/80 font-semibold"
                   aria-label={`Remove time slot ${idx + 1} for ${day}`}
                 >
                   Remove
