@@ -26,38 +26,55 @@ const Appointments = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col pt-20 sm:pt-24">
       {/* Fixed header with tabs */}
-      <div className="sticky top-0 z-10 w-full bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
-        <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-4 flex items-center justify-between">
+      <div className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
+        <div className="container mx-auto px-2 sm:px-4 flex items-center justify-between h-12 sm:h-14">
           <h1 className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Appointments
           </h1>
           <ThemeToggle />
         </div>
-        
+
         <div className="container mx-auto px-2 sm:px-4 pb-2 sm:pb-4">
-          <Tabs defaultValue="upcoming" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-4 w-full">
-              <TabsTrigger value="upcoming" className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1">
+          <Tabs
+            defaultValue="upcoming"
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <TabsList className="grid grid-cols-4 gap-1 w-full">
+              <TabsTrigger
+                value="upcoming"
+                className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1"
+              >
                 <CalendarIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className={isMobile ? "text-xs" : "text-sm"}>
                   {isMobile ? "Up" : "Upcoming"}
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="past" className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1">
+              <TabsTrigger
+                value="past"
+                className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1"
+              >
                 <ClockIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className={isMobile ? "text-xs" : "text-sm"}>
                   {isMobile ? "Past" : "Past"}
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="confirmed" className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1">
+              <TabsTrigger
+                value="confirmed"
+                className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1"
+              >
                 <CheckCircleIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className={isMobile ? "text-xs" : "text-sm"}>
                   {isMobile ? "Conf" : "Confirmed"}
                 </span>
               </TabsTrigger>
-              <TabsTrigger value="all" className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1">
+              <TabsTrigger
+                value="all"
+                className="flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3 py-1"
+              >
                 <ListIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className={isMobile ? "text-xs" : "text-sm"}>
                   {isMobile ? "All" : "All"}
@@ -67,10 +84,15 @@ const Appointments = () => {
           </Tabs>
         </div>
       </div>
-      
+
       {/* Main content area with responsive padding */}
-      <div className="flex-grow container mx-auto px-2 sm:px-4 py-4 sm:py-6 md:py-8">
-        <Tabs defaultValue="upcoming" value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <main className="flex-grow container mx-auto px-2 sm:px-4 py-4 sm:py-6 md:py-8 mt-16 sm:mt-20">
+        <Tabs
+          defaultValue="upcoming"
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="w-full"
+        >
           <TabsContent value="upcoming" className="mt-0">
             {renderTabContent(
               <CalendarIcon className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />,
@@ -78,7 +100,7 @@ const Appointments = () => {
               "Your upcoming appointments will be shown here. You will be able to book appointments manually or receive automated confirmations."
             )}
           </TabsContent>
-          
+
           <TabsContent value="past" className="mt-0">
             {renderTabContent(
               <ClockIcon className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />,
@@ -86,7 +108,7 @@ const Appointments = () => {
               "Your appointment history will be displayed here. Track your previous visits and consultations."
             )}
           </TabsContent>
-          
+
           <TabsContent value="confirmed" className="mt-0">
             {renderTabContent(
               <CheckCircleIcon className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />,
@@ -94,7 +116,7 @@ const Appointments = () => {
               "View all your confirmed appointments here. These are appointments that have been approved by Dr. Harpal Singh."
             )}
           </TabsContent>
-          
+
           <TabsContent value="all" className="mt-0">
             {renderTabContent(
               <ListIcon className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />,
@@ -103,9 +125,10 @@ const Appointments = () => {
             )}
           </TabsContent>
         </Tabs>
-      </div>
+      </main>
     </div>
   );
-}
+};
 
 export default Appointments;
+
