@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,7 +10,7 @@ import { Label } from "@/components/ui/label";
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otpEmail, setOtpEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpCode, setOtpCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,7 +18,6 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Manage user session
   useEffect(() => {
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -92,17 +90,18 @@ const Auth = () => {
     }
   };
 
-  const handleSendOtp = async () => {
+  const handleSendPhoneOtp = async () => {
     setLoading(true);
     try {
+      const formattedPhone = phoneNumber.startsWith('+') ? phoneNumber : `+${phoneNumber}`;
       const { error } = await supabase.auth.signInWithOtp({
-        email: otpEmail,
+        phone: formattedPhone,
       });
       if (error) throw error;
       setOtpSent(true);
       toast({
         title: "OTP Sent",
-        description: "Check your email for the OTP code.",
+        description: "Check your phone for the verification code.",
       });
     } catch (error: any) {
       toast({
@@ -115,18 +114,18 @@ const Auth = () => {
     }
   };
 
-  const handleVerifyOtp = async () => {
+  const handleVerifyPhoneOtp = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.verifyOtp({
-        email: otpEmail,
+        phone: phoneNumber.startsWith('+') ? phoneNumber : `+${phoneNumber}`,
         token: otpCode,
-        type: "magiclink", // Using magiclink type here for OTP from email
+        type: "sms",
       });
       if (error) throw error;
       toast({
         title: "Success",
-        description: "Logged in successfully",
+        description: "Phone number verified successfully",
       });
       navigate("/");
     } catch (error: any) {
@@ -148,7 +147,7 @@ const Auth = () => {
         </h2>
         <button
           onClick={() => setIsLoginMode(!isLoginMode)}
-          className="mt-2 text-center text-sm text-blue-600 hover:underline"
+          className="mt-2 text-center text-sm text-blue-600 hover:underline w-full"
           type="button"
         >
           {isLoginMode ? "New user? Create an account" : "Have an account? Sign in"}
@@ -194,11 +193,13 @@ const Auth = () => {
             >
               {isLoginMode ? "Sign in" : "Sign up"}
             </Button>
+
             <div className="flex items-center justify-center space-x-2">
               <span className="border-b border-gray-300 w-full" />
               <span className="text-sm text-gray-500">Or continue with</span>
               <span className="border-b border-gray-300 w-full" />
             </div>
+
             <Button
               type="button"
               onClick={handleGoogleSignIn}
@@ -209,34 +210,33 @@ const Auth = () => {
               Sign in with Google
             </Button>
 
-            {/* OTP Section */}
             {!otpSent ? (
-              <>
-                <div className="mt-6">
-                  <Label htmlFor="otpEmail">Email for OTP login</Label>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="phoneNumber">Phone Number (with country code)</Label>
                   <Input
-                    id="otpEmail"
-                    name="otpEmail"
-                    type="email"
-                    autoComplete="email"
-                    value={otpEmail}
-                    onChange={(e) => setOtpEmail(e.target.value)}
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    type="tel"
+                    placeholder="+1234567890"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="mt-1"
                   />
                 </div>
                 <Button
                   type="button"
-                  onClick={handleSendOtp}
-                  disabled={loading || !otpEmail}
-                  className="w-full mt-2"
+                  onClick={handleSendPhoneOtp}
+                  disabled={loading || !phoneNumber}
+                  className="w-full"
                 >
-                  Send OTP
+                  Send SMS Code
                 </Button>
-              </>
+              </div>
             ) : (
-              <>
-                <div className="mt-6">
-                  <Label htmlFor="otpCode">Enter OTP code</Label>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="otpCode">Enter SMS verification code</Label>
                   <Input
                     id="otpCode"
                     name="otpCode"
@@ -244,17 +244,18 @@ const Auth = () => {
                     value={otpCode}
                     onChange={(e) => setOtpCode(e.target.value)}
                     className="mt-1"
+                    maxLength={6}
                   />
                 </div>
                 <Button
                   type="button"
-                  onClick={handleVerifyOtp}
+                  onClick={handleVerifyPhoneOtp}
                   disabled={loading || otpCode.length === 0}
-                  className="w-full mt-2"
+                  className="w-full"
                 >
-                  Verify OTP
+                  Verify Phone Number
                 </Button>
-              </>
+              </div>
             )}
           </div>
         </div>
