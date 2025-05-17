@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, LogOut, Edit } from "lucide-react";
 import { toast } from "sonner";
 
+// Define interface for profile data - used regardless of DB table status
 interface Profile {
   id: string;
   full_name: string | null;
@@ -23,7 +24,7 @@ interface Profile {
 const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Partial<Profile> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,18 +40,42 @@ const Profile = () => {
         
         setUser(user);
         
-        // Fetch profile data
-        const { data: profileData, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-          
-        if (error) {
+        try {
+          // Try to fetch profile data
+          const { data: profileData, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+            
+          if (error) {
+            if (error.code === '42P01') {
+              // Table doesn't exist error - create a default profile object
+              const defaultProfile: Partial<Profile> = {
+                id: user.id,
+                full_name: null,
+                avatar_url: null,
+                phone_number: user.phone || null,
+                created_at: new Date().toISOString(),
+              };
+              setProfile(defaultProfile);
+              
+              console.log("Profiles table doesn't exist yet. Using default profile data.");
+            } else {
+              console.error("Error fetching profile:", error);
+              toast.error("Failed to load profile data");
+            }
+          } else if (profileData) {
+            setProfile(profileData);
+          }
+        } catch (error) {
           console.error("Error fetching profile:", error);
-          toast.error("Failed to load profile data");
-        } else if (profileData) {
-          setProfile(profileData);
+          // Create a fallback profile with available user data
+          setProfile({
+            id: user.id,
+            phone_number: user.phone || null,
+            created_at: new Date().toISOString(),
+          });
         }
       } catch (error) {
         console.error("Error:", error);
@@ -119,6 +144,11 @@ const Profile = () => {
                   <CardDescription>
                     {user?.email}
                   </CardDescription>
+                  {user?.phone && (
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {user.phone}
+                    </p>
+                  )}
                 </div>
               </CardHeader>
               
@@ -127,14 +157,15 @@ const Profile = () => {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-sm text-muted-foreground">Phone Number</p>
-                      <p className="font-medium">{profile?.phone_number || "Not provided"}</p>
+                      <p className="font-medium">{user?.phone || profile?.phone_number || "Not provided"}</p>
                     </div>
                   </div>
 
                   <div>
                     <p className="text-sm text-muted-foreground">Member Since</p>
                     <p className="font-medium">
-                      {profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : "Unknown"}
+                      {profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : 
+                       user?.created_at ? new Date(user.created_at).toLocaleDateString() : "Unknown"}
                     </p>
                   </div>
                   
