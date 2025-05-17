@@ -40,7 +40,7 @@ const Index = () => {
       {/* Fixed top bar with navigation and theme toggle */}
       {session && (
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
-          <nav className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-12 sm:h-14">
+          <nav className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
             <ul className="flex space-x-6 text-sm sm:text-base font-medium overflow-x-auto no-scrollbar">
               <li>
                 <Link
@@ -90,6 +90,18 @@ const Index = () => {
                   Appointments
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/profile"
+                  className={`whitespace-nowrap hover:underline ${
+                    location.pathname === "/profile"
+                      ? "text-primary font-bold"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  Profile
+                </Link>
+              </li>
             </ul>
             <div className="flex-shrink-0">
               <ThemeToggle />
@@ -101,7 +113,7 @@ const Index = () => {
       {/* Apply top padding to avoid hiding behind fixed header */}
       <main
         className={`min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 ${
-          session ? "pt-14 sm:pt-16" : ""
+          session ? "pt-16" : ""
         }`}
       >
         <div className="max-w-4xl w-full py-12">
@@ -130,10 +142,7 @@ const Index = () => {
               </div>
             )}
           </section>
-          {session && (
-            // The nav below removed because moved to fixed header
-            null
-          )}
+          
           {/* Testimonials Section */}
           <section className="mt-14 bg-card text-card-foreground p-6 rounded-lg shadow-md border border-border max-w-2xl mx-auto">
             <h2 className="text-2xl font-semibold mb-6 text-center">Patient Testimonials</h2>
@@ -158,4 +167,3 @@ const Index = () => {
 };
 
 export default Index;
-
